@@ -10,7 +10,7 @@ from os import getenv
 
 load_dotenv()
 
-url = getenv("WIKI_API_URL")
+url = getenv("WIKI_URL")
 api_key = getenv("MISTRAL_API_KEY")
 
 params = {

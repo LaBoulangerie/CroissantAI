@@ -1,11 +1,12 @@
-from langchain_community.document_loaders import TextLoader
 from langchain_mistralai.chat_models import ChatMistralAI
 from langchain_mistralai.embeddings import MistralAIEmbeddings
 from langchain_community.vectorstores import FAISS
-from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.prompts import ChatPromptTemplate
 from langchain.chains import create_retrieval_chain
+
+from fastapi import Depends, FastAPI, HTTPException
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
 
 from os import getenv
 from dotenv import load_dotenv
@@ -29,11 +30,7 @@ model = ChatMistralAI(mistral_api_key=api_key, temperature=0.9)
 
 # Define prompt template
 prompt = ChatPromptTemplate.from_template(
-    """Répond aux questions suivantes en utilisant uniquement le contexte fourni et la personnalité définie.
-
-<personality>
-Je suis un gentleman distingué et je parle avec élégance. Je commence toujours mes phrases par "Mesdames et Messieurs" et je termine par "Je vous remercie".
-</personality>
+    """Répond aux questions suivantes en français en utilisant uniquement le contexte fourni.
 
 <context>
 {context}
@@ -45,5 +42,21 @@ Question: {input}"""
 # Create a retrieval chain to answer questions
 document_chain = create_stuff_documents_chain(model, prompt)
 retrieval_chain = create_retrieval_chain(retriever, document_chain)
-response = retrieval_chain.invoke({"input": input()})
-print(response["answer"])
+
+app = FastAPI()
+secret_key = getenv("SECRET_KEY")
+security = HTTPBasic()
+
+
+def authenticate(credentials: HTTPBasicCredentials = Depends(security)):
+    if credentials.username != secret_key or credentials.password != "":
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+
+
+@app.post("/ask", dependencies=[Depends(authenticate)])
+async def ask(request: str):
+    try:
+        response = retrieval_chain.invoke({"input": request})
+        return {"answer": response["answer"]}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
