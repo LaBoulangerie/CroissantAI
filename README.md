@@ -14,9 +14,10 @@ Using [Langchain](https://langchain.com/) , [Mistral](https://mistral.ai) and [F
 MISTRAL_API_KEY=YOUR_MISTRAL_API_KEY
 WIKI_URL=YOUR_WIKI_URL (e.g. https://laboulangerie.fandom.com/fr/)
 SECRET_KEY=YOUR_SECRET
+PORT=3333 (optional, default is 8000)
 ```
 
-4. Run the server with `uvicorn src.app:app --reload`
+4. Run the server with `python3 src/app.py`
 
 ## 🚀 Usage
 

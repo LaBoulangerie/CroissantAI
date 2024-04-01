@@ -60,3 +60,11 @@ async def ask(request: str):
         return {"answer": response["answer"]}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+if __name__ == "__main__":
+    import uvicorn
+
+    port = int(getenv("PORT", 8000))
+
+    uvicorn.run(app, host="0.0.0.0", port=port)
