@@ -50,7 +50,7 @@ secret_key = getenv("SECRET_KEY")
 security = HTTPBasic()
 
 
-def authenticate(credentials: HTTPBasicCredentials = Depends(security)):
+def authenticate(credentials=Depends(security)):
     if credentials.username != secret_key or credentials.password != "":
         raise HTTPException(status_code=401, detail="Invalid credentials")
 
