@@ -8,7 +8,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain.chains import create_retrieval_chain
 
 from fastapi import Depends, FastAPI, HTTPException
-from fastapi.security import HTTPBasic, HTTPBasicCredentials
+from fastapi.security import HTTPBasic
 
 from os import getenv
 from dotenv import load_dotenv
@@ -28,7 +28,7 @@ vector = FAISS.load_local(
 retriever = vector.as_retriever()
 
 # Define LLM
-model = ChatMistralAI(mistral_api_key=api_key, temperature=0.9)
+model = ChatMistralAI(mistral_api_key=api_key, temperature=0.5)
 
 # Define prompt template
 prompt = ChatPromptTemplate.from_template(
