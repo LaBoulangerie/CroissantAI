@@ -1,8 +1,10 @@
 # coding=utf-8
 
 import requests
+from os import getenv
 
-url = "http://127.0.0.1:8000/ask"
+port = getenv("PORT", 8000)
+url = f"http://127.0.0.1:{port}/ask"
 params = {"request": "Quelle est la capitale de Goast ?"}
 headers = {"accept": "application/json"}
 
