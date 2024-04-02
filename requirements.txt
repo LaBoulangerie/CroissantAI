@@ -1,7 +1,8 @@
 langchain
 langchain_mistralai
 fastapi
-dotenv
+python-dotenv
 bs4
 requests
 uvicorn
+faiss-cpu
