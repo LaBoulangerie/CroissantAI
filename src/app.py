@@ -32,7 +32,7 @@ model = ChatMistralAI(mistral_api_key=api_key, temperature=0.5)
 
 # Define prompt template
 prompt = ChatPromptTemplate.from_template(
-    """Répond aux questions suivantes en français en utilisant uniquement le contexte fourni.
+    """Répond aux questions suivantes uniquement en français en utilisant uniquement le contexte fourni.
 
 <context>
 {context}
