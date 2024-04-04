@@ -2,6 +2,9 @@
 
 import requests
 from os import getenv
+from dotenv import load_dotenv
+
+load_dotenv()
 
 port = getenv("PORT", 8000)
 url = f"http://127.0.0.1:{port}/ask"
