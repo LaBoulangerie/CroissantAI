@@ -46,7 +46,7 @@ document_chain = create_stuff_documents_chain(model, prompt)
 retrieval_chain = create_retrieval_chain(retriever, document_chain)
 
 app = FastAPI()
-secret_key = getenv("SECRET_KEY")
+secret_key = getenv("SECRET_KEY", "secret")
 security = HTTPBasic()
 
 

@@ -11,7 +11,7 @@ url = f"http://127.0.0.1:{port}/ask"
 params = {"request": "Quelle est la capitale de Goast ?"}
 headers = {"accept": "application/json"}
 
-username = "lecroissantilesttropbonmiammiam"  # YOUR SECRET KEY HERE
+username = getenv("SECRET_KEY", "secret")
 password = ""
 
 response = requests.post(url, params=params, headers=headers, auth=(username, password))
@@ -19,7 +19,7 @@ response = requests.post(url, params=params, headers=headers, auth=(username, pa
 if response.ok:
     response_data = response.json()
     assert "Tharass" in response_data["answer"]
-    print("Test passed!")
+    print("Test passed!", response_data["answer"])
 else:
     print(
         f"Request failed with status code {response.status_code} and message {response.text}"
