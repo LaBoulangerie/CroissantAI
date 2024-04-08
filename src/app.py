@@ -38,7 +38,7 @@ prompt = ChatPromptTemplate.from_template(
 {context}
 </context>
 
-Question: {input}"""
+Question de l'utilisateur : {input}"""
 )
 
 # Create a retrieval chain to answer questions
